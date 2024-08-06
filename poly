@@ -1,0 +1,53 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+#define SIZE 5
+
+void createMatrix(char key[], char matrix[SIZE][SIZE]) {
+    int used[26] = {0}; 
+    int x = 0, y = 0;
+    
+    for (int i = 0; key[i] != '\0'; i++) {
+        if (key[i] == 'j') key[i] = 'i'; 
+        if (!used[key[i] - 'a']) {
+            matrix[x][y++] = key[i];
+            used[key[i] - 'a'] = 1;
+            if (y == SIZE) {
+                y = 0;
+                x++;
+            }
+        }
+    }
+
+    for (char c = 'a'; c <= 'z'; c++) {
+        if (c == 'j') continue; 
+        if (!used[c - 'a']) {
+            matrix[x][y++] = c;
+            used[c - 'a'] = 1;
+            if (y == SIZE) {
+                y = 0;
+                x++;
+            }
+        }
+    }
+}
+
+void printMatrix(char matrix[SIZE][SIZE]) {
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            printf("%c ", matrix[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    char key[] = "playfairexample";
+    char matrix[SIZE][SIZE];
+    
+    createMatrix(key, matrix);
+    printMatrix(matrix);
+    
+    return 0;
+}
